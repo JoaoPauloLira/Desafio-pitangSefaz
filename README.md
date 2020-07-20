@@ -2,7 +2,7 @@
 
 Projeto do processo seletivo para programador Jr Pitang.
 
-Link do Heroku: https://pitang-sefaz.herokuapp.com/
+Link do Heroku: https://pitangsefaz.herokuapp.com/
 
 O Container utilizado foi o WildFly 20 Link: https://download.jboss.org/wildfly/20.0.0.Final/wildfly-20.0.0.Final.zip
 

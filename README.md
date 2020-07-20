@@ -10,10 +10,10 @@ Tecnologias utilizadas, EJB, Hibernate, Maven, JAVA EE, Java 8, JSP, JSTL, JQuer
 
 ---------------------------------------------------------------------------------
 
-O Sistema é um CRUD de Usuarios onde permite se Cadastrado e Listado os usuarios sem a necessidade de login;
+O Sistema é um CRUD de Usuários onde permite Cadastradar e Listadar os usuários sem a necessidade de login;
 
-Para Editar ou Excluir é precisor esta logado no sistema.
+Para Editar ou Excluir é preciso estar logado no sistema.
 
-Não é permitido o adastro do mesmo e-mail, pois ele é utilizado para as credenciais do usuario logado
+Não é permitido o cadastro do mesmo e-mail, pois ele é utilizado para logar no sistema.
 
 ----------------------------------------------------------------------------------

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.pitang.sefaz.dto.UsuarioExcluirDto;
 import br.com.pitang.sefaz.model.Usuario;
 import br.com.pitang.sefaz.service.UsuarioService;
 import br.com.pitang.sefaz.util.DesSerializableUsuario;
@@ -64,7 +63,7 @@ public class UsuarioServlet extends HttpServlet {
 
 		try {
 			Usuario usuario;
-			usuario = desSerializableUsuario.desSerializable(request.getReader());
+			usuario = desSerializableUsuario.getUsuario(request.getReader());
 			usuarioService.salvar(usuario);
 
 			responseAdpter.created(response);
@@ -83,13 +82,12 @@ public class UsuarioServlet extends HttpServlet {
 			resp.sendRedirect("login.jsp");
 		} else {
 			try {
-				UsuarioExcluirDto usuario;
-				usuario = new UsuarioExcluirDto().desSerializable(req.getReader());
+				 Long idUsuario = desSerializableUsuario.getId(req.getReader());
 
-				if (usuario.getId() == usuarioLogado.getId()) {
+				if (idUsuario == usuarioLogado.getId()) {
 					responseAdpter.responseError(resp, "Não é permitido excluir o usuário que estar logado no momento!");
 				} else {
-					Usuario usuarioDelete = usuarioService.getUsuario(usuario.getId());
+					Usuario usuarioDelete = usuarioService.getUsuario(idUsuario);
 					usuarioService.deletar(usuarioDelete.getEmail());
 					responseAdpter.ok(resp);
 				}
@@ -110,7 +108,7 @@ public class UsuarioServlet extends HttpServlet {
 		} else {
 			try {
 				Usuario usuario;
-				usuario = desSerializableUsuario.desSerializable(req.getReader());
+				usuario = desSerializableUsuario.getUsuario(req.getReader());
 				usuarioService.alterar(usuario);
 				responseAdpter.ok(resp);
 			} catch (Exception e) {

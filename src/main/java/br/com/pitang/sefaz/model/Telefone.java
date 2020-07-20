@@ -48,18 +48,6 @@ public class Telefone implements Serializable{
 		this.tipo = tipo;
 	}
 	
-	public Telefone builder(String fone, Tipo tipo) throws Exception {
-		try {
-			this.ddd = Integer.parseInt(fone.substring(0,2));
-			this.numero = fone.substring(2);
-			this.tipo = tipo;			
-		} catch (Exception e) {
-			throw new Exception("Por favor preencha os telefones");
-		}
-		
-		return this;
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -1,4 +1,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<noscript>
+  	<div class="alert alert-warning" role="alert">
+  		<strong>
+	  		Atenção: para o sistema funcionar perfeitamente, o javascript do browser deve esta ativo!
+  		</strong>
+	</div>
+</noscript>
 <header>
 	<nav class="navbar navbar-expand-lg navbar-light bg-dark">
 		<a class="navbar-brand text-white" href="<c:url value="/" />">CRUD - Usuários</a>

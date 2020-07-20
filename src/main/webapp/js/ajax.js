@@ -111,3 +111,8 @@ function excluirUsuario(id) {
 	let data = '{"id" : ' + id + '}'
 	chamadaAjaxJson("UsuarioWS", data, listarSucesso, listarErro, "delete")
 }
+
+function editarUsuario(id) {
+	let url = origin + "/UsuarioWS?editar=" + id
+	$(location).attr('href', url);
+}

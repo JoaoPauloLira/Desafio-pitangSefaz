@@ -45,7 +45,7 @@
 							<div class="btn-group" role="group" aria-label="Basic example">
 								
 								<c:if test="${!empty usuarioSessao}">
-									<a href="UsuarioWS?editar=${lista.id}" id="editarUsuario"  class="btn btn-secondary" >Editar</a>
+									<a href="#" onclick="editarUsuario(${lista.id})" id="editarUsuario"  class="btn btn-secondary" >Editar</a>
 									<a href="#" onclick="excluirUsuario(${lista.id})"  class="btn btn-danger">Excluir</a>
 								</c:if>
 								<c:if test="${empty usuarioSessao}">

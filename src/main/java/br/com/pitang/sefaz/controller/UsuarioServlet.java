@@ -30,20 +30,17 @@ public class UsuarioServlet extends HttpServlet {
 	private ResponseAdpter responseAdpter;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioSessao");
+		
 		String logica = request.getParameter("logica");
 		String redirect = request.getParameter("redirect");
 		String editar = request.getParameter("editar");
-
-		Usuario usuarioLogado = (Usuario) request.getSession().getAttribute("usuarioSessao");
 
 		if (logica != null) {
 			List<Usuario> usuarios = usuarioService.listaUsuarios();
 			request.setAttribute("listaUsuarios", usuarios);
 			request.getRequestDispatcher("/WEB-INF/listaUsuarios.jsp").forward(request, response);
-
 		} else if (redirect != null) {
 			request.getRequestDispatcher("/WEB-INF/" + request.getParameter("redirect") + ".jsp").forward(request,
 					response);
@@ -51,7 +48,6 @@ public class UsuarioServlet extends HttpServlet {
 			if (usuarioLogado == null) {
 				responseAdpter.responseError(response, "Para excluir é precisa estar logado!");
 			} else {
-
 				Long id = Long.parseLong(request.getParameter("editar"));
 				Usuario usuarios = usuarioService.getUsuario(id);
 				request.setAttribute("usuario", usuarios);
@@ -80,7 +76,6 @@ public class UsuarioServlet extends HttpServlet {
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		Usuario usuarioLogado = (Usuario) req.getSession().getAttribute("usuarioSessao");
 
 		if (usuarioLogado == null) {
@@ -117,8 +112,6 @@ public class UsuarioServlet extends HttpServlet {
 				Usuario usuario;
 				usuario = desSerializableUsuario.desSerializable(req.getReader());
 				usuarioService.alterar(usuario);
-				System.out.println("editar");
-
 				responseAdpter.ok(resp);
 			} catch (Exception e) {
 				e.printStackTrace();

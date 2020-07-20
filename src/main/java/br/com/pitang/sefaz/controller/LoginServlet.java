@@ -35,15 +35,11 @@ public class LoginServlet extends HttpServlet {
 		if (sessao != null) {
 			sessao.removeAttribute("usuarioSessao");
 			sessao.invalidate();
-			System.out.println("sessao morreu");
 		}
 
 		if (usuarioLogin != null) {
 			sessao = request.getSession(true);
 			sessao.setAttribute("usuarioSessao", usuarioLogin);
-
-			System.out.println("Usuario logado = " + usuarioLogin.getEmail());
-
 			response.sendRedirect("UsuarioWS?logica=ListarUsuarios");
 		}
 

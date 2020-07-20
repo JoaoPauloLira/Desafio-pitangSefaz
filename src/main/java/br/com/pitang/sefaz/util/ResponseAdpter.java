@@ -19,7 +19,7 @@ public class ResponseAdpter {
 		Gson gson = new Gson();
 		String employeeJsonString = gson.toJson(obj);
 
-		resp.setStatus(HttpStatus.OK);
+		resp.setStatus(HttpServletResponse.SC_OK);
 
 		PrintWriter out = null;
 		out = resp.getWriter();
@@ -30,16 +30,16 @@ public class ResponseAdpter {
 	}
 
 	public void created(HttpServletResponse resp) {
-		resp.setStatus(HttpStatus.CREATED);
+		resp.setStatus(HttpServletResponse.SC_CREATED);
 	}
 
 	public void ok(HttpServletResponse resp) {
-		resp.setStatus(HttpStatus.OK);
+		resp.setStatus(HttpServletResponse.SC_OK);
 	}
 
 	public void responseError(HttpServletResponse resp, String error) throws IOException {
 
-		resp.setStatus(HttpStatus.BAD_GATEWAY);
+		resp.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
 
 		PrintWriter out = null;
 		out = resp.getWriter();

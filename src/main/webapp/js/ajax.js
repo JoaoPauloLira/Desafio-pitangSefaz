@@ -22,7 +22,7 @@ $(document).ready(function () {
 				'		}									' +
 				'	]										' +
 				'}'
-			chamadaAjaxJson("UsuarioWS", data, listarSucessoCadastro, listarErro, "post")
+			chamadaAjaxJson("UsuarioWS", data, listarSucesso, listarErro, "post")
 		}
 	});
 
@@ -48,7 +48,7 @@ $(document).ready(function () {
 				'		}									' +
 				'	]										' +
 				'}'
-			chamadaAjaxJson("UsuarioWS", data, listarSucessoEditar, listarErro, "put")
+			chamadaAjaxJson("UsuarioWS", data, listarSucesso, listarErro, "put")
 		}
 	});
 
@@ -84,24 +84,12 @@ function chamadaAjaxJson(servlet, parametros, metodoSucesso, metodoErro, httpMet
 		});
 }
 
-function listarSucessoCadastro(sucesso) {
-	alert("Usuario cadastrado com Sucesso!");
+function listarSucesso(sucesso) {
+	alert("Operação realizada com Sucesso!");
 	let origin = $(location).attr('origin');
-	let url = origin + "/SefazJsp/UsuarioWS?logica=ListarUsuarios"
-	$(location).attr('href', url);
-}
-
-function listarSucessoExcluir(sucesso) {
-	alert("Usuario excluido com Sucesso!");
-	let origin = $(location).attr('origin');
-	let url = origin + "/SefazJsp/UsuarioWS?logica=ListarUsuarios"
-	$(location).attr('href', url);
-}
-
-function listarSucessoEditar(sucesso) {
-	alert("Usuario Editado com Sucesso!");
-	let origin = $(location).attr('origin');
-	let url = origin + "/SefazJsp/UsuarioWS?logica=ListarUsuarios"
+	//let sisName = $(location).attr('pathname').split('/')[1];
+	//let url = origin + "/" + sisName + "/UsuarioWS?logica=ListarUsuarios"
+	let url = origin + "/UsuarioWS?logica=ListarUsuarios"
 	$(location).attr('href', url);
 }
 
@@ -121,5 +109,5 @@ function getNumero(fone) {
 
 function excluirUsuario(id) {
 	let data = '{"id" : ' + id + '}'
-	chamadaAjaxJson("UsuarioWS", data, listarSucessoExcluir, listarErro, "delete")
+	chamadaAjaxJson("UsuarioWS", data, listarSucesso, listarErro, "delete")
 }

@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import br.com.pitang.sefaz.dto.UsuarioExcluirDto;
 import br.com.pitang.sefaz.model.Usuario;
 import br.com.pitang.sefaz.service.UsuarioService;
+import br.com.pitang.sefaz.util.DesSerializableUsuario;
 import br.com.pitang.sefaz.util.ResponseAdpter;
 
 @WebServlet(name = "Servlet", urlPatterns = { "/UsuarioWS" })
@@ -21,6 +22,12 @@ public class UsuarioServlet extends HttpServlet {
 
 	@Inject
 	private UsuarioService usuarioService;
+
+	@Inject
+	private DesSerializableUsuario desSerializableUsuario;
+
+	@Inject
+	private ResponseAdpter responseAdpter;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -42,7 +49,7 @@ public class UsuarioServlet extends HttpServlet {
 					response);
 		} else if (editar != null) {
 			if (usuarioLogado == null) {
-				ResponseAdpter.getInstancia().ResponseError(response, "Para excluir é precisa esta logado!");
+				responseAdpter.ResponseError(response, "Para excluir é precisa esta logado!");
 			} else {
 
 				Long id = Long.parseLong(request.getParameter("editar"));
@@ -61,13 +68,13 @@ public class UsuarioServlet extends HttpServlet {
 
 		try {
 			Usuario usuario;
-			usuario = new Usuario().desSerializable(request.getReader());
+			usuario = desSerializableUsuario.desSerializable(request.getReader());
 			usuarioService.salvar(usuario);
-		
-			ResponseAdpter.getInstancia().ResponseCREATED(response);
+
+			responseAdpter.ResponseCREATED(response);
 		} catch (Exception e) {
 			e.printStackTrace();
-			ResponseAdpter.getInstancia().ResponseError(response, e.getMessage());
+			responseAdpter.ResponseError(response, e.getMessage());
 		}
 	}
 
@@ -77,25 +84,24 @@ public class UsuarioServlet extends HttpServlet {
 		Usuario usuarioLogado = (Usuario) req.getSession().getAttribute("usuarioSessao");
 
 		if (usuarioLogado == null) {
-			ResponseAdpter.getInstancia().ResponseError(resp, "Para excluir é precisa esta logado!");
+			responseAdpter.ResponseError(resp, "Para excluir é precisa esta logado!");
 			resp.sendRedirect("login.jsp");
 		} else {
 			try {
 				UsuarioExcluirDto usuario;
 				usuario = new UsuarioExcluirDto().desSerializable(req.getReader());
 
-				if(usuario.getId() == usuarioLogado.getId()) {
-					ResponseAdpter.getInstancia().ResponseError(resp, "Não é permitido excluir o usuario que esta logado no momento!");					
-				}
-				else {
+				if (usuario.getId() == usuarioLogado.getId()) {
+					responseAdpter.ResponseError(resp, "Não é permitido excluir o usuario que esta logado no momento!");
+				} else {
 					Usuario usuarioDelete = usuarioService.getUsuario(usuario.getId());
 					usuarioService.deletar(usuarioDelete.getEmail());
-					ResponseAdpter.getInstancia().ResponseDelete(resp);					
+					responseAdpter.ResponseDelete(resp);
 				}
-				
+
 			} catch (Exception e) {
 				e.printStackTrace();
-				ResponseAdpter.getInstancia().ResponseError(resp, "Erro ao tentar excluir o Usuário");
+				responseAdpter.ResponseError(resp, "Erro ao tentar excluir o Usuário");
 			}
 		}
 	}
@@ -105,18 +111,18 @@ public class UsuarioServlet extends HttpServlet {
 		Usuario usuarioLogado = (Usuario) req.getSession().getAttribute("usuarioSessao");
 
 		if (usuarioLogado == null) {
-			ResponseAdpter.getInstancia().ResponseError(resp, "Para editar é precisa esta logado!");
+			responseAdpter.ResponseError(resp, "Para editar é precisa esta logado!");
 		} else {
 			try {
 				Usuario usuario;
-				usuario = new Usuario().desSerializable(req.getReader());
+				usuario = desSerializableUsuario.desSerializable(req.getReader());
 				usuarioService.alterar(usuario);
 				System.out.println("editar");
 
-				ResponseAdpter.getInstancia().ResponseEditar(resp);
+				responseAdpter.ResponseEditar(resp);
 			} catch (Exception e) {
 				e.printStackTrace();
-				ResponseAdpter.getInstancia().ResponseError(resp, e.getMessage());
+				responseAdpter.ResponseError(resp, e.getMessage());
 			}
 		}
 

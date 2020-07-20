@@ -3,33 +3,35 @@ package br.com.pitang.sefaz.util;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+@Stateless
 public class ResponseAdpter {
 
-	private static Gson gson;
-
-	private ResponseAdpter() {
-		gson = new Gson();
+	public ResponseAdpter() {
+		
 	}
 
-	private static ResponseAdpter instancia;
+	// private static ResponseAdpter instancia;
 
-	public static ResponseAdpter getInstancia() {
+//	public static ResponseAdpter getInstancia() {
+//
+//		if (instancia == null) {
+//			instancia = new ResponseAdpter();
+//		}
+//		return instancia;
+//	}
 
-		if (instancia == null) {
-			instancia = new ResponseAdpter();
-		}
-		return instancia;
-	}
-
-	public static void okJson(Object obj, HttpServletResponse resp) throws IOException {
+	public void okJson(Object obj, HttpServletResponse resp) throws IOException {
+		Gson gson = new Gson();
 		String employeeJsonString = gson.toJson(obj);
 
 		resp.setStatus(HttpStatus.OK);
-		
+
 		PrintWriter out = null;
 		out = resp.getWriter();
 		resp.setContentType("application/json");
@@ -37,22 +39,21 @@ public class ResponseAdpter {
 		out.print(employeeJsonString);
 		out.flush();
 	}
-	
-	public static void ResponseCREATED(HttpServletResponse resp) {
+
+	public void ResponseCREATED(HttpServletResponse resp) {
 		resp.setStatus(HttpStatus.CREATED);
 	}
-	
-	public static void ResponseDelete(HttpServletResponse resp) {
+
+	public void ResponseDelete(HttpServletResponse resp) {
 		resp.setStatus(HttpStatus.OK);
 	}
-	
-	public static void ResponseEditar(HttpServletResponse resp) {
+
+	public void ResponseEditar(HttpServletResponse resp) {
 		resp.setStatus(HttpStatus.OK);
 	}
-	
-	
-	public static void ResponseError(HttpServletResponse resp, String error) throws IOException {
-		
+
+	public void ResponseError(HttpServletResponse resp, String error) throws IOException {
+
 		resp.setStatus(HttpStatus.BAD_GATEWAY);
 
 		PrintWriter out = null;
@@ -61,7 +62,7 @@ public class ResponseAdpter {
 		resp.setCharacterEncoding("UTF-8");
 		out.print(error);
 		out.flush();
-		
+
 	}
 
 }
